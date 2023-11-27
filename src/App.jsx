@@ -8,6 +8,8 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (newItem === '') return;
+
     setTodos((currentTodos) => [
       ...currentTodos,
       { id: crypto.randomUUID(), title: newItem, completed: false },
@@ -28,6 +30,10 @@ function App() {
     );
   };
 
+  const deleteTodo = (id) => {
+    setTodos((currentTodos) => todos.filter((todo) => todo.id != id));
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} className="new-item-form">
@@ -45,6 +51,7 @@ function App() {
 
       <h1 className="header">Todo List</h1>
       <ul className="list">
+        {todos.length === 0 && 'No Todos'}
         {todos.map((todo) => (
           <li key={todo.id}>
             <label>
@@ -55,7 +62,12 @@ function App() {
               />
               {todo.title}
             </label>
-            <button className="btn btn-danger">Delete</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => deleteTodo(todo.id)}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
