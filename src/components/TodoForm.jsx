@@ -1,6 +1,17 @@
-import React from 'react';
+import { useState } from 'react';
 
-const TodoForm = ({ newItem, handleSubmit, setNewItem }) => {
+const TodoForm = ({ addTodo }) => {
+  const [newItem, setNewItem] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (newItem === '') return;
+
+    addTodo(newItem);
+
+    setNewItem('');
+  };
   return (
     <form onSubmit={handleSubmit} className="new-item-form">
       <div className="form-row">

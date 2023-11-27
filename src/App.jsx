@@ -4,20 +4,13 @@ import './styles.css';
 import { useState } from 'react';
 
 function App() {
-  const [newItem, setNewItem] = useState('');
   const [todos, setTodos] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (newItem === '') return;
-
+  const addTodo = (title) => {
     setTodos((currentTodos) => [
       ...currentTodos,
-      { id: crypto.randomUUID(), title: newItem, completed: false },
+      { id: crypto.randomUUID(), title, completed: false },
     ]);
-
-    setNewItem('');
   };
 
   const toggleTodo = (id, completed) => {
@@ -38,11 +31,7 @@ function App() {
 
   return (
     <>
-      <TodoForm
-        newItem={newItem}
-        handleSubmit={handleSubmit}
-        setNewItem={setNewItem}
-      />
+      <TodoForm addTodo={addTodo} />
       <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
     </>
   );
